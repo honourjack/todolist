@@ -1,0 +1,31 @@
+<!-- zeze/templates/zeze/task_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <ul>
+    {% for task in tasks %}
+        <li>{{ task.title }}</li>
+        <ul>
+            <li>Description: {{ task.description }}</li>
+            <li>Due Date: {{ task.due_date }}</li>
+            <li>Status: {% if task.status %} Completed {% else %} Not Completed {% endif %}</li>
+            <li>Tags:
+                <ul>
+                {% for tag in task.tags.all %}
+                    <li>{{ tag.name }}</li>
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        <a href="{% url 'task_update' pk=task.pk %}">Update</a> |
+        <a href="{% url 'task_delete' pk=task.pk %}">Delete</a>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'task_create' %}">Create New Task</a>
+</body>
+</html>
